@@ -1,0 +1,102 @@
+{
+  "post": [
+    {
+      "postId": 1,
+      "profileId": 1,
+      "desc": "bali bali~~ bali bali~~ jogjaaaa"
+    },
+    {
+      "postId": 2,
+      "profileId": 2,
+      "desc": "Hari ini jalan-jalan keliling kota, cuacanya enak banget!"
+    },
+    {
+      "postId": 3,
+      "profileId": 3,
+      "desc": "Ngopi dulu sebelum mulai kerja ☕"
+    },
+    {
+      "postId": 4,
+      "profileId": 4,
+      "desc": "Finally sampai Bali! Pantainya bagus banget 🌴"
+    },
+    {
+      "postId": 5,
+      "profileId": 5,
+      "desc": "Weekend ini mau naik gunung lagi 🏔️"
+    },
+    {
+      "postId": 6,
+      "profileId": 6,
+      "desc": "Futsal malam ini, semoga menang ⚽"
+    },
+    {
+      "postId": 7,
+      "profileId": 2,
+      "desc": "Lagi baca buku bagus banget. Recommended!"
+    },
+    {
+      "postId": 8,
+      "profileId": 3,
+      "desc": "Coding seharian, bug satu muncul bug lainnya ikut muncul 😭"
+    },
+    {
+      "postId": 9,
+      "profileId": 4,
+      "desc": "Sunset hari ini cantik banget 🌅"
+    },
+    {
+      "postId": 10,
+      "profileId": 1,
+      "desc": "Bali lagi, Bali lagi. Kayaknya belum bosen deh 😂"
+    },
+    {
+      "postId": 11,
+      "profileId": 1,
+      "desc": "p lokasi",
+      "parentPostId": 9
+    },
+    {
+      "postId": 12,
+      "profileId": 2,
+      "desc": "Wah bagus banget tempatnya!",
+      "parentPostId": 9
+    },
+    {
+      "postId": 13,
+      "profileId": 3,
+      "desc": "Ini di Bali daerah mana?",
+      "parentPostId": 9
+    },
+    {
+      "postId": 14,
+      "profileId": 4,
+      "desc": "Kapan kesini lagi?",
+      "parentPostId": 10
+    },
+    {
+      "postId": 15,
+      "profileId": 5,
+      "desc": "Ikut dong kalau pergi lagi 😂",
+      "parentPostId": 10
+    },
+    {
+      "postId": 16,
+      "profileId": 1,
+      "desc": "Boleh, nanti kabarin aja!",
+      "parentPostId": 15
+    },
+    {
+      "postId": 17,
+      "profileId": 3,
+      "desc": "Wkwkwk relate banget",
+      "parentPostId": 8
+    },
+    {
+      "postId": 18,
+      "profileId": 2,
+      "desc": "Aku juga sering ngalamin 😭",
+      "parentPostId": 8
+    }
+  ]
+}

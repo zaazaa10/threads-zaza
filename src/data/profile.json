@@ -1,0 +1,40 @@
+{
+  "profile": [
+    {
+      "profileId": 1,
+      "profileName": "Mifta Parameter",
+      "desc": "jalan jalan all day",
+      "imageUrl": "https://picsum.photos/200/200?random=1"
+    },
+    {
+      "profileId": 2,
+      "profileName": "Zaaza Ocavia",
+      "desc": "suka membaca buku",
+      "imageUrl": "https://picsum.photos/200/200?random=2"
+    },
+    {
+      "profileId": 3,
+      "profileName": "Muhammad Dika",
+      "desc": "ngopi dan coding setiap hari",
+      "imageUrl": "https://picsum.photos/200/200?random=3"
+    },
+    {
+      "profileId": 4,
+      "profileName": "Resti Katsu",
+      "desc": "traveling ke pantai dan gunung",
+      "imageUrl": "https://picsum.photos/200/200?random=4"
+    },
+    {
+      "profileId": 5,
+      "profileName": "Luthfi Padang",
+      "desc": "main futsal tiap weekend",
+      "imageUrl": "https://picsum.photos/200/200?random=5"
+    },
+    {
+      "profileId": 6,
+      "profileName": "Jojojosjis",
+      "desc": "emyu dihati",
+      "imageUrl": "https://picsum.photos/200/200?random=6"
+    }
+  ]
+}
