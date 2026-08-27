@@ -15,6 +15,11 @@ function ForYou() {
 
   const mainPosts = posts
     .filter((post) => post.parentPostId === undefined)
+    .sort(
+      (a, b) =>
+        new Date(b.timestamp).getTime() -
+        new Date(a.timestamp).getTime()
+    )
     .slice(0, 5);
 
   const getProfile = (profileId) => {
@@ -25,7 +30,8 @@ function ForYou() {
 
   const getActionCount = (postId, actionName) => {
     const actionType = actionTypes.find(
-      (type) => type.actionTypeName.toLowerCase() ===
+      (type) =>
+        type.actionTypeName.toLowerCase() ===
         actionName.toLowerCase()
     );
 
@@ -44,6 +50,42 @@ function ForYou() {
     return posts.filter(
       (post) => post.parentPostId === postId
     ).length;
+  };
+
+  const formatTime = (timestamp) => {
+    const postTime = new Date(timestamp);
+    const now = new Date();
+
+    const diffInSeconds = Math.floor(
+      (now.getTime() - postTime.getTime()) / 1000
+    );
+
+    if (diffInSeconds < 60) {
+      return `${Math.max(diffInSeconds, 1)}s`;
+    }
+
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+
+    if (diffInMinutes < 60) {
+      return `${diffInMinutes}m`;
+    }
+
+    const diffInHours = Math.floor(diffInMinutes / 60);
+
+    if (diffInHours < 24) {
+      return `${diffInHours}h`;
+    }
+
+    const diffInDays = Math.floor(diffInHours / 24);
+
+    if (diffInDays < 7) {
+      return `${diffInDays}d`;
+    }
+
+    return postTime.toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "short",
+    });
   };
 
   return (
@@ -67,7 +109,7 @@ function ForYou() {
             <PostCard
               key={post.postId}
               username={profile.profileName}
-              time="Today"
+              time={formatTime(post.timestamp)}
               content={post.desc}
               avatar={profile.imageUrl}
               likes={getActionCount(post.postId, "Like")}

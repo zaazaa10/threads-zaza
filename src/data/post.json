@@ -3,100 +3,118 @@
     {
       "postId": 1,
       "profileId": 1,
-      "desc": "bali bali~~ bali bali~~ jogjaaaa"
+      "desc": "bali bali~~ bali bali~~ jogjaaaa",
+      "timestamp": "2026-08-20T08:30:00Z"
     },
     {
       "postId": 2,
       "profileId": 2,
-      "desc": "Hari ini jalan-jalan keliling kota, cuacanya enak banget!"
+      "desc": "Hari ini jalan-jalan keliling kota, cuacanya enak banget!",
+      "timestamp": "2026-08-17T10:15:00Z"
     },
     {
       "postId": 3,
       "profileId": 3,
-      "desc": "Ngopi dulu sebelum mulai kerja ☕"
+      "desc": "Ngopi dulu sebelum mulai kerja ☕",
+      "timestamp": "2026-08-20T12:45:00Z"
     },
     {
       "postId": 4,
-      "profileId": 4,
-      "desc": "Finally sampai Bali! Pantainya bagus banget 🌴"
+      "profileId": 1,
+      "desc": "Finally sampai Bali! Pantainya bagus banget 🌴",
+      "timestamp": "2026-08-21T07:20:00Z"
     },
     {
       "postId": 5,
-      "profileId": 5,
-      "desc": "Weekend ini mau naik gunung lagi 🏔️"
+      "profileId": 4,
+      "desc": "Weekend ini mau naik gunung lagi 🏔️",
+      "timestamp": "2026-08-21T09:10:00Z"
     },
     {
       "postId": 6,
-      "profileId": 6,
-      "desc": "Futsal malam ini, semoga menang ⚽"
+      "profileId": 5,
+      "desc": "Futsal malam ini, semoga menang ⚽",
+      "timestamp": "2026-08-21T15:30:00Z"
     },
     {
       "postId": 7,
-      "profileId": 2,
-      "desc": "Lagi baca buku bagus banget. Recommended!"
+      "profileId": 1,
+      "desc": "Lagi baca buku bagus banget. Recommended!",
+      "timestamp": "2026-08-22T08:00:00Z"
     },
     {
       "postId": 8,
-      "profileId": 3,
-      "desc": "Coding seharian, bug satu muncul bug lainnya ikut muncul 😭"
+      "profileId": 6,
+      "desc": "Coding seharian, bug satu muncul bug lainnya ikut muncul 😭",
+      "timestamp": "2026-08-22T11:25:00Z"
     },
     {
       "postId": 9,
       "profileId": 4,
-      "desc": "Sunset hari ini cantik banget 🌅"
+      "desc": "Sunset hari ini cantik banget 🌅",
+      "timestamp": "2026-08-23T10:45:00Z"
     },
     {
       "postId": 10,
-      "profileId": 1,
-      "desc": "Bali lagi, Bali lagi. Kayaknya belum bosen deh 😂"
+      "profileId": 3,
+      "desc": "Bali lagi, Bali lagi. Kayaknya belum bosen deh 😂",
+      "timestamp": "2026-08-23T13:20:00Z"
     },
     {
       "postId": 11,
-      "profileId": 1,
+      "profileId": 2,
       "desc": "p lokasi",
-      "parentPostId": 9
+      "parentPostId": 9,
+      "timestamp": "2026-08-23T11:05:00Z"
     },
     {
       "postId": 12,
       "profileId": 2,
       "desc": "Wah bagus banget tempatnya!",
-      "parentPostId": 9
+      "parentPostId": 9,
+      "timestamp": "2026-08-23T11:12:00Z"
     },
     {
       "postId": 13,
-      "profileId": 3,
+      "profileId": 2,
       "desc": "Ini di Bali daerah mana?",
-      "parentPostId": 9
+      "parentPostId": 9,
+      "timestamp": "2026-08-23T11:18:00Z"
     },
     {
       "postId": 14,
-      "profileId": 4,
+      "profileId": 2,
       "desc": "Kapan kesini lagi?",
-      "parentPostId": 10
+      "parentPostId": 10,
+      "timestamp": "2026-08-19T14:10:00Z"
     },
     {
       "postId": 15,
-      "profileId": 5,
+      "profileId": 2,
       "desc": "Ikut dong kalau pergi lagi 😂",
-      "parentPostId": 10
+      "parentPostId": 10,
+      "timestamp": "2026-08-23T14:15:00Z"
     },
     {
       "postId": 16,
       "profileId": 1,
       "desc": "Boleh, nanti kabarin aja!",
-      "parentPostId": 15
+      "parentPostId": 15,
+      "timestamp": "2026-08-23T14:20:00Z"
     },
     {
       "postId": 17,
-      "profileId": 3,
+      "profileId": 2,
       "desc": "Wkwkwk relate banget",
-      "parentPostId": 8
+      "parentPostId": 8,
+      "timestamp": "2026-08-22T11:40:00Z"
     },
     {
       "postId": 18,
       "profileId": 2,
       "desc": "Aku juga sering ngalamin 😭",
-      "parentPostId": 8
+      "parentPostId": 8,
+      "timestamp": "2026-08-21T11:45:00Z"
     }
   ]
 }

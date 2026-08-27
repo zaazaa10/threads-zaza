@@ -1,67 +1,164 @@
-import { MoreHorizontal, X } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import { useState } from "react";
+import PostCard from "../components/PostCard";
+
 import profileData from "../data/profile.json";
+import postData from "../data/post.json";
+import actionData from "../data/action.json";
+import actionTypeData from "../data/actionType.json";
 
 function Profile() {
-  const profile = profileData.profile.find(
-    (item) => item.profileId === 2
+  const LOGGED_IN_PROFILE_ID = 2;
+
+  const profiles = profileData.profile;
+  const posts = postData.post;
+  const actions = actionData.action;
+  const actionTypes = actionTypeData.actionType;
+
+  const profile = profiles.find(
+    (item) => item.profileId === LOGGED_IN_PROFILE_ID
   );
 
   const [isEditing, setIsEditing] = useState(false);
+  const [activeTab, setActiveTab] = useState("Threads");
 
-  const [name, setName] = useState(profile?.profileName || "");
-  const [username, setUsername] = useState(profile?.username || "username");
-  const [bio, setBio] = useState(profile?.desc || "");
-
+  const [name, setName] = useState(profile.profileName);
+  const [username, setUsername] = useState(
+    profile.username || "username"
+  );
+  const [bio, setBio] = useState(profile.desc);
   const [interests, setInterests] = useState("");
   const [links, setLinks] = useState("");
   const [podcast, setPodcast] = useState("");
-
   const [showInstagram, setShowInstagram] = useState(false);
   const [showRecentViews, setShowRecentViews] = useState(false);
   const [profilePrivacy, setProfilePrivacy] = useState("Private");
 
-  if (!profile) {
-    return <div className="page">Profile not found.</div>;
-  }
+  const profileThreads = posts
+    .filter(
+      (post) =>
+        post.profileId === LOGGED_IN_PROFILE_ID &&
+        post.parentPostId === undefined
+    )
+    .sort(
+      (a, b) =>
+        new Date(b.timestamp).getTime() -
+        new Date(a.timestamp).getTime()
+    );
+
+  const profileReplies = posts
+    .filter(
+      (post) =>
+        post.profileId === LOGGED_IN_PROFILE_ID &&
+        post.parentPostId !== undefined
+    )
+    .sort(
+      (a, b) =>
+        new Date(b.timestamp).getTime() -
+        new Date(a.timestamp).getTime()
+    );
+
+  const getActionCount = (postId, actionName) => {
+    const actionType = actionTypes.find(
+      (type) =>
+        type.actionTypeName.toLowerCase() ===
+        actionName.toLowerCase()
+    );
+
+    if (!actionType) {
+      return 0;
+    }
+
+    return actions.filter(
+      (action) =>
+        action.postId === postId &&
+        action.actionTypeId === actionType.actionTypeId
+    ).length;
+  };
+
+  const getReplyCount = (postId) => {
+    return posts.filter(
+      (post) => post.parentPostId === postId
+    ).length;
+  };
+
+  const formatTime = (timestamp) => {
+    const postTime = new Date(timestamp);
+    const now = new Date();
+
+    const diffInSeconds = Math.floor(
+      (now.getTime() - postTime.getTime()) / 1000
+    );
+
+    if (diffInSeconds < 60) {
+      return `${Math.max(diffInSeconds, 1)}s`;
+    }
+
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) {
+      return `${diffInMinutes}m`;
+    }
+
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) {
+      return `${diffInHours}h`;
+    }
+
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays < 7) {
+      return `${diffInDays}d`;
+    }
+
+    return postTime.toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "short",
+    });
+  };
 
   const handleSave = () => {
     setIsEditing(false);
   };
 
   const handleCancel = () => {
-    setName(profile.profileName || "");
+    setName(profile.profileName);
     setUsername(profile.username || "username");
-    setBio(profile.desc || "");
-
+    setBio(profile.desc);
     setInterests("");
     setLinks("");
     setPodcast("");
-
     setShowInstagram(false);
     setShowRecentViews(false);
     setProfilePrivacy("Private");
-
     setIsEditing(false);
   };
+
+  const displayedPosts =
+    activeTab === "Threads" ? profileThreads : profileReplies;
 
   return (
     <div className="page profile-page">
       <header className="page-header">
         <h1>Profile</h1>
-
-        <button className="header-more-btn">
-          <MoreHorizontal size={22} />
-        </button>
+        <MoreHorizontal size={22} />
       </header>
 
       <section className="profile-card">
         <div className="profile-top">
           <div className="profile-info">
-            <h2>{name}</h2>
-            <p>
-              @{username}
-            </p>
+            {isEditing ? (
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="profile-input"
+                placeholder="Name"
+              />
+            ) : (
+              <>
+                <h2>{name}</h2>
+                <p>@{username}</p>
+              </>
+            )}
           </div>
 
           <img
@@ -71,9 +168,17 @@ function Profile() {
           />
         </div>
 
-        <p className="profile-bio">
-          {bio}
-        </p>
+        {isEditing ? (
+          <textarea
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+            className="profile-textarea"
+            placeholder="Bio"
+          />
+        ) : (
+          <p className="profile-bio">{bio}</p>
+        )}
+
         <button
           className="edit-profile-btn"
           onClick={() => setIsEditing(true)}
@@ -83,30 +188,14 @@ function Profile() {
       </section>
 
       {isEditing && (
-        <div
-          className="edit-profile-overlay"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              handleCancel();
-            }
-          }}
-        >
-
+        <div className="edit-profile-overlay">
           <div className="edit-profile-card">
             <div className="edit-profile-header">
-              <button
-                className="close-edit-btn"
-                onClick={handleCancel}
-                aria-label="Close"
-              >
-                <X size={22} />
-              </button>
-
               <h2>Edit profile</h2>
+
               <button
                 className="done-btn"
-                onClick={handleSave}
-              >
+                onClick={handleSave}>
                 Done
               </button>
             </div>
@@ -114,7 +203,6 @@ function Profile() {
             <div className="edit-profile-body">
               <div className="edit-field">
                 <label>Name</label>
-
                 <input
                   type="text"
                   value={name}
@@ -139,7 +227,7 @@ function Profile() {
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
                   placeholder="Bio"
-                  rows={3}
+                  rows={2}
                 />
               </div>
 
@@ -174,49 +262,43 @@ function Profile() {
               </div>
 
               <div className="edit-field toggle-field">
-                <div className="toggle-content">
-                  <label>Show Instagram badge</label>
-                </div>
+                <label>Show Instagram badge</label>
 
                 <button
-                  type="button"
                   className={`toggle-btn ${
                     showInstagram ? "active" : ""
                   }`}
                   onClick={() =>
                     setShowInstagram(!showInstagram)
                   }
-                  aria-label="Toggle Instagram badge"
                 >
                   <span className="toggle-slider"></span>
                 </button>
               </div>
 
               <div className="edit-field toggle-field">
-                <div className="toggle-content">
-                  <label>Show recent views</label>
-                  <p className="field-note">
-                    This will be public on your profile when you
-                    get 10K+ recent views.
-                  </p>
-                </div>
+                <label>Show recent views</label>
 
                 <button
-                  type="button"
                   className={`toggle-btn ${
                     showRecentViews ? "active" : ""
                   }`}
                   onClick={() =>
                     setShowRecentViews(!showRecentViews)
                   }
-                  aria-label="Toggle recent views"
                 >
                   <span className="toggle-slider"></span>
                 </button>
+
+                <p className="field-note">
+                  This will be public on your profile when you get
+                  10K+ recent views.
+                </p>
               </div>
 
               <div className="edit-field">
                 <label>Profile privacy</label>
+
                 <select
                   value={profilePrivacy}
                   onChange={(e) =>
@@ -235,7 +317,6 @@ function Profile() {
             </div>
 
             <div className="edit-profile-footer">
-
               <button
                 className="cancel-edit-btn"
                 onClick={handleCancel}
@@ -249,41 +330,80 @@ function Profile() {
               >
                 Save
               </button>
-
             </div>
-
           </div>
-
         </div>
       )}
 
       <div className="profile-tabs">
-        <button className="profile-tab active">
+        <button
+          className={`profile-tab ${
+            activeTab === "Threads" ? "active" : ""
+          }`}
+          onClick={() => setActiveTab("Threads")}
+        >
           Threads
         </button>
-        <button className="profile-tab">
+
+        <button
+          className={`profile-tab ${
+            activeTab === "Replies" ? "active" : ""
+          }`}
+          onClick={() => setActiveTab("Replies")}
+        >
           Replies
         </button>
 
-        <button className="profile-tab">
+        <button
+          className={`profile-tab ${
+            activeTab === "Media" ? "active" : ""
+          }`}
+          onClick={() => setActiveTab("Media")}
+        >
           Media
         </button>
 
-        <button className="profile-tab">
+        <button
+          className={`profile-tab ${
+            activeTab === "Reposts" ? "active" : ""
+          }`}
+          onClick={() => setActiveTab("Reposts")}
+        >
           Reposts
         </button>
-
-      </div>
-      <div className="profile-empty">
-
-        <h3>No threads yet</h3>
-
-        <p>
-          Your threads will appear here.
-        </p>
-
       </div>
 
+      {activeTab === "Media" || activeTab === "Reposts" ? (
+        <div className="profile-empty">
+          <h3>No {activeTab.toLowerCase()} yet</h3>
+          <p>Your {activeTab.toLowerCase()} will appear here.</p>
+        </div>
+      ) : displayedPosts.length > 0 ? (
+        <section className="posts profile-posts">
+          {displayedPosts.map((post) => (
+            <PostCard
+              key={post.postId}
+              username={profile.profileName}
+              time={formatTime(post.timestamp)}
+              content={post.desc}
+              avatar={profile.imageUrl}
+              likes={getActionCount(post.postId, "Like")}
+              replies={getReplyCount(post.postId)}
+              reposts={getActionCount(post.postId, "Repost")}
+              shares={getActionCount(post.postId, "Share")}
+            />
+          ))}
+        </section>
+      ) : (
+        <div className="profile-empty">
+          <h3>
+            No {activeTab.toLowerCase()} yet
+          </h3>
+          <p>
+            Your {activeTab.toLowerCase()} will appear here.
+          </p>
+        </div>
+      )}
     </div>
   );
 }
