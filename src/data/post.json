@@ -21,50 +21,49 @@
     {
       "postId": 4,
       "profileId": 1,
-      "desc": "Finally sampai Bali! Pantainya bagus banget 🌴",
+      "desc": "finally sampai Bali! Pantainya bagus banget 🌴",
       "timestamp": "2026-08-21T07:20:00Z"
     },
     {
       "postId": 5,
       "profileId": 4,
-      "desc": "Weekend ini mau naik gunung lagi 🏔️",
+      "desc": "weekend ini mau naik gunung lagi 🏔️ tebak gunung apa? clue: atap jateng!",
       "timestamp": "2026-08-21T09:10:00Z"
     },
     {
       "postId": 6,
       "profileId": 5,
-      "desc": "Futsal malam ini, semoga menang ⚽",
+      "desc": "futsal malam ini, semoga menang ⚽",
       "timestamp": "2026-08-21T15:30:00Z"
     },
     {
       "postId": 7,
       "profileId": 1,
-      "desc": "Lagi baca buku bagus banget. Recommended!",
+      "desc": "lagi baca buku laut bercerita, bagus banget! saran buku sejenisnya dong guysss",
       "timestamp": "2026-08-22T08:00:00Z"
     },
     {
       "postId": 8,
       "profileId": 6,
-      "desc": "Coding seharian, bug satu muncul bug lainnya ikut muncul 😭",
+      "desc": "coding seharian, bug satu muncul bug lainnya ikut muncul wkwkwkwk😭",
       "timestamp": "2026-08-22T11:25:00Z"
     },
     {
       "postId": 9,
       "profileId": 4,
-      "desc": "Sunset hari ini cantik banget 🌅",
+      "desc": "Sunset hari ini cantik banget, MasyaAllah🌅",
       "timestamp": "2026-08-23T10:45:00Z"
     },
     {
       "postId": 10,
       "profileId": 3,
-      "desc": "Bali lagi, Bali lagi. Kayaknya belum bosen deh 😂",
+      "desc": "mungkin beberapa hal memang nggak ditakdirkan untuk bertahan selamanya. ada orang yang datang cuma untuk mengajarkan sesuatu, ada hubungan yang berakhir karena memang sudah selesai masanya, dan ada kenangan yang cukup disimpan tanpa harus diulang. dulu aku pikir kehilangan selalu berarti gagal mempertahankan sesuatu, sekarang aku mulai paham kalau melepaskan juga kadang merupakan bentuk dari menerima.",
       "timestamp": "2026-08-23T13:20:00Z"
     },
     {
       "postId": 11,
-      "profileId": 2,
-      "desc": "p lokasi",
-      "parentPostId": 9,
+      "profileId": 7,
+      "desc": "Hari Ini Warung Salma buka jam 10.00 WIB ya!",
       "timestamp": "2026-08-23T11:05:00Z"
     },
     {
@@ -112,7 +111,7 @@
     {
       "postId": 18,
       "profileId": 2,
-      "desc": "Aku juga sering ngalamin 😭",
+      "desc": "aku juga sering ngalamin 😭",
       "parentPostId": 8,
       "timestamp": "2026-08-21T11:45:00Z"
     }

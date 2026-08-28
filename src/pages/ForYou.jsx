@@ -3,13 +3,11 @@ import Composer from "../components/Composer";
 import PostCard from "../components/PostCard";
 
 import profileData from "../data/profile.json";
-import postData from "../data/post.json";
 import actionData from "../data/action.json";
 import actionTypeData from "../data/actionType.json";
 
-function ForYou() {
+function ForYou({ posts, onPost }) {
   const profiles = profileData.profile;
-  const posts = postData.post;
   const actions = actionData.action;
   const actionTypes = actionTypeData.actionType;
 
@@ -19,12 +17,11 @@ function ForYou() {
       (a, b) =>
         new Date(b.timestamp).getTime() -
         new Date(a.timestamp).getTime()
-    )
-    .slice(0, 5);
+    );
 
   const getProfile = (profileId) => {
     return profiles.find(
-      (profile) => profile.profileId === profileId
+      (profile) => Number(profile.profileId) === Number(profileId)
     );
   };
 
@@ -95,7 +92,7 @@ function ForYou() {
         <MoreHorizontal size={22} />
       </header>
 
-      <Composer />
+      <Composer onPost={onPost} />
 
       <section className="posts">
         {mainPosts.map((post) => {

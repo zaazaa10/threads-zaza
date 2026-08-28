@@ -9,12 +9,12 @@
     {
       "profileId": 2,
       "profileName": "Zaaza Ocavia",
-      "desc": "suka membaca buku",
+      "desc": "Life better with Stoicism.",
       "imageUrl": "https://picsum.photos/200/200?random=2"
     },
     {
       "profileId": 3,
-      "profileName": "Muhammad Dika",
+      "profileName": "Dika Dicoding",
       "desc": "ngopi dan coding setiap hari",
       "imageUrl": "https://picsum.photos/200/200?random=3"
     },
@@ -27,14 +27,20 @@
     {
       "profileId": 5,
       "profileName": "Luthfi Padang",
-      "desc": "main futsal tiap weekend",
+      "desc": "Futsal is my life",
       "imageUrl": "https://picsum.photos/200/200?random=5"
     },
     {
       "profileId": 6,
       "profileName": "Jojojosjis",
-      "desc": "emyu dihati",
+      "desc": "Man United dihati",
       "imageUrl": "https://picsum.photos/200/200?random=6"
+    },
+    {
+      "profileId": 7,
+      "profileName": "Geprek Salma",
+      "desc": "Toko Makanan",
+      "imageUrl": "https://picsum.photos/200/200?random=7"
     }
   ]
 }

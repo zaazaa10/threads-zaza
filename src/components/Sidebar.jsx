@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
-function Sidebar() {
+function Sidebar({ onNewThread }) {
   return (
     <aside className="sidebar">
       <div className="threads-logo">
@@ -27,17 +27,21 @@ function Sidebar() {
           <span>For you</span>
         </NavLink>
 
-        <button className="menu-item disabled">
+        <button
+          type="button"
+          className="menu-item new-thread-menu"
+          onClick={onNewThread}
+        >
           <Pencil size={23} />
           <span>New thread</span>
         </button>
 
-        <button className="menu-item disabled">
+        <button type="button" className="menu-item disabled">
           <Search size={23} />
           <span>Search</span>
         </button>
 
-        <button className="menu-item disabled">
+        <button type="button" className="menu-item disabled">
           <Activity size={23} />
           <span>Activity</span>
           <span className="notification-dot"></span>
@@ -53,7 +57,7 @@ function Sidebar() {
           <span>Profile</span>
         </NavLink>
 
-        <button className="menu-item disabled">
+        <button type="button" className="menu-item disabled">
           <Bookmark size={23} />
           <span>Saved</span>
         </button>
@@ -73,7 +77,7 @@ function Sidebar() {
         </div>
       </div>
 
-      <button className="more-button">
+      <button type="button" className="more-button">
         <span className="more-icon">☰</span>
         <span>More</span>
       </button>
