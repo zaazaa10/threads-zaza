@@ -17,6 +17,7 @@ function Sidebar({ onNewThread }) {
       </div>
 
       <nav className="main-menu">
+        {/* FOR YOU */}
         <NavLink
           to="/"
           className={({ isActive }) =>
@@ -27,6 +28,7 @@ function Sidebar({ onNewThread }) {
           <span>For you</span>
         </NavLink>
 
+        {/* NEW THREAD */}
         <button
           type="button"
           className="menu-item new-thread-menu"
@@ -36,19 +38,31 @@ function Sidebar({ onNewThread }) {
           <span>New thread</span>
         </button>
 
-        <button type="button" className="menu-item disabled">
+        {/* SEARCH */}
+        <NavLink
+          to="/search"
+          className={({ isActive }) =>
+            `menu-item ${isActive ? "active" : ""}`
+          }
+        >
           <Search size={23} />
           <span>Search</span>
-        </button>
+        </NavLink>
 
-        <button type="button" className="menu-item disabled">
+        {/* ACTIVITY */}
+        <button
+          type="button"
+          className="menu-item disabled"
+        >
           <Activity size={23} />
           <span>Activity</span>
           <span className="notification-dot"></span>
         </button>
 
+        {/* PROFILE */}
         <NavLink
           to="/profile"
+          end
           className={({ isActive }) =>
             `menu-item ${isActive ? "active" : ""}`
           }
@@ -57,19 +71,26 @@ function Sidebar({ onNewThread }) {
           <span>Profile</span>
         </NavLink>
 
-        <button type="button" className="menu-item disabled">
+        {/* SAVED */}
+        <button
+          type="button"
+          className="menu-item disabled"
+        >
           <Bookmark size={23} />
           <span>Saved</span>
         </button>
       </nav>
 
+      {/* FEEDS */}
       <div className="feeds">
         <div className="feeds-title">
           <span>Feeds</span>
           <span>Edit</span>
         </div>
 
-        <div className="feed-link">Following</div>
+        <div className="feed-link">
+          Following
+        </div>
 
         <div className="feed-link">
           <span>Ghost posts</span>
@@ -77,7 +98,11 @@ function Sidebar({ onNewThread }) {
         </div>
       </div>
 
-      <button type="button" className="more-button">
+      {/* MORE */}
+      <button
+        type="button"
+        className="more-button"
+      >
         <span className="more-icon">☰</span>
         <span>More</span>
       </button>

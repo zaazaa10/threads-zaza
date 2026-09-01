@@ -1,32 +1,46 @@
 import { MoreHorizontal } from "lucide-react";
 import { useState } from "react";
-import PostCard from "../components/PostCard";
+import { useNavigate, useParams } from "react-router-dom";
 
+import PostCard from "../components/PostCard";
 import profileData from "../data/profile.json";
 import postData from "../data/post.json";
 import actionData from "../data/action.json";
 import actionTypeData from "../data/actionType.json";
 
 function Profile() {
+  const { profileId } = useParams();
+  const navigate = useNavigate();
+
   const LOGGED_IN_PROFILE_ID = 2;
 
-  const profiles = profileData.profile;
-  const posts = postData.post;
-  const actions = actionData.action;
-  const actionTypes = actionTypeData.actionType;
+  const profiles = profileData.profile || [];
+  const posts = postData.post || [];
+  const actions = actionData.action || [];
+  const actionTypes = actionTypeData.actionType || [];
+
+  // Kalau ada profileId di URL,
+  // berarti sedang melihat profile orang lain.
+  // Kalau tidak ada, berarti profile sendiri.
+  const selectedProfileId = profileId
+    ? Number(profileId)
+    : LOGGED_IN_PROFILE_ID;
 
   const profile = profiles.find(
-    (item) => item.profileId === LOGGED_IN_PROFILE_ID
+    (item) => Number(item.profileId) === selectedProfileId
   );
+
+  const isOwnProfile =
+    selectedProfileId === LOGGED_IN_PROFILE_ID;
 
   const [isEditing, setIsEditing] = useState(false);
   const [activeTab, setActiveTab] = useState("Threads");
+  const [isFollowing, setIsFollowing] = useState(false);
 
-  const [name, setName] = useState(profile.profileName);
-  const [username, setUsername] = useState(
-    profile.username || "username"
-  );
-  const [bio, setBio] = useState(profile.desc);
+  // Edit profile states
+  const [editName, setEditName] = useState("");
+  const [editUsername, setEditUsername] = useState("");
+  const [editBio, setEditBio] = useState("");
   const [interests, setInterests] = useState("");
   const [links, setLinks] = useState("");
   const [podcast, setPodcast] = useState("");
@@ -34,10 +48,43 @@ function Profile() {
   const [showRecentViews, setShowRecentViews] = useState(false);
   const [profilePrivacy, setProfilePrivacy] = useState("Private");
 
+  // Cari profile berdasarkan ID
+  const getProfileById = (id) => {
+    return profiles.find(
+      (item) => Number(item.profileId) === Number(id)
+    );
+  };
+
+  // Buka edit profile
+  const handleEdit = () => {
+    setEditName(profile?.profileName || "");
+    setEditUsername(profile?.username || "username");
+    setEditBio(profile?.desc || "");
+    setInterests("");
+    setLinks("");
+    setPodcast("");
+    setShowInstagram(false);
+    setShowRecentViews(false);
+    setProfilePrivacy("Private");
+
+    setIsEditing(true);
+  };
+
+  // Simpan edit
+  const handleSave = () => {
+    setIsEditing(false);
+  };
+
+  // Cancel edit
+  const handleCancel = () => {
+    setIsEditing(false);
+  };
+
+  // Threads milik profile
   const profileThreads = posts
     .filter(
       (post) =>
-        post.profileId === LOGGED_IN_PROFILE_ID &&
+        Number(post.profileId) === selectedProfileId &&
         post.parentPostId === undefined
     )
     .sort(
@@ -46,10 +93,11 @@ function Profile() {
         new Date(a.timestamp).getTime()
     );
 
+  // Replies milik profile
   const profileReplies = posts
     .filter(
       (post) =>
-        post.profileId === LOGGED_IN_PROFILE_ID &&
+        Number(post.profileId) === selectedProfileId &&
         post.parentPostId !== undefined
     )
     .sort(
@@ -58,10 +106,11 @@ function Profile() {
         new Date(a.timestamp).getTime()
     );
 
+  // Hitung jumlah action
   const getActionCount = (postId, actionName) => {
     const actionType = actionTypes.find(
       (type) =>
-        type.actionTypeName.toLowerCase() ===
+        type.actionTypeName?.toLowerCase() ===
         actionName.toLowerCase()
     );
 
@@ -71,17 +120,21 @@ function Profile() {
 
     return actions.filter(
       (action) =>
-        action.postId === postId &&
-        action.actionTypeId === actionType.actionTypeId
+        Number(action.postId) === Number(postId) &&
+        Number(action.actionTypeId) ===
+          Number(actionType.actionTypeId)
     ).length;
   };
 
+  // Hitung jumlah reply
   const getReplyCount = (postId) => {
     return posts.filter(
-      (post) => post.parentPostId === postId
+      (post) =>
+        Number(post.parentPostId) === Number(postId)
     ).length;
   };
 
+  // Format waktu post
   const formatTime = (timestamp) => {
     const postTime = new Date(timestamp);
     const now = new Date();
@@ -95,16 +148,19 @@ function Profile() {
     }
 
     const diffInMinutes = Math.floor(diffInSeconds / 60);
+
     if (diffInMinutes < 60) {
       return `${diffInMinutes}m`;
     }
 
     const diffInHours = Math.floor(diffInMinutes / 60);
+
     if (diffInHours < 24) {
       return `${diffInHours}h`;
     }
 
     const diffInDays = Math.floor(diffInHours / 24);
+
     if (diffInDays < 7) {
       return `${diffInDays}d`;
     }
@@ -115,156 +171,220 @@ function Profile() {
     });
   };
 
-  const handleSave = () => {
-    setIsEditing(false);
-  };
-
-  const handleCancel = () => {
-    setName(profile.profileName);
-    setUsername(profile.username || "username");
-    setBio(profile.desc);
-    setInterests("");
-    setLinks("");
-    setPodcast("");
-    setShowInstagram(false);
-    setShowRecentViews(false);
-    setProfilePrivacy("Private");
-    setIsEditing(false);
-  };
-
   const displayedPosts =
-    activeTab === "Threads" ? profileThreads : profileReplies;
+    activeTab === "Threads"
+      ? profileThreads
+      : profileReplies;
+
+  // Kalau profile tidak ditemukan
+  if (!profile) {
+    return (
+      <div className="page profile-page">
+        <div className="profile-empty">
+          <h3>Profile not found</h3>
+
+          <p>
+            The profile you are looking for does not exist.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="page profile-page">
+
+      {/* ================= HEADER ================= */}
       <header className="page-header">
-        <h1>Profile</h1>
+        <div className="profile-header-left">
+
+          {/* Tombol back hanya muncul ketika melihat profile orang */}
+          {!isOwnProfile && (
+            <button
+              type="button"
+              className="profile-back-btn"
+              onClick={() => navigate("/search")}
+              aria-label="Back to search"
+            >
+              ←
+            </button>
+          )}
+
+          <h1>Profile</h1>
+        </div>
+
         <MoreHorizontal size={22} />
       </header>
 
+      {/* ================= PROFILE CARD ================= */}
       <section className="profile-card">
+
         <div className="profile-top">
+
           <div className="profile-info">
-            {isEditing ? (
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="profile-input"
-                placeholder="Name"
-              />
-            ) : (
-              <>
-                <h2>{name}</h2>
-                <p>@{username}</p>
-              </>
-            )}
+            <h2>{profile.profileName}</h2>
+
+            <p>
+              @{profile.username}
+            </p>
           </div>
 
           <img
             src={profile.imageUrl}
-            alt={name}
+            alt={profile.profileName}
             className="profile-avatar"
           />
         </div>
 
-        {isEditing ? (
-          <textarea
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
-            className="profile-textarea"
-            placeholder="Bio"
-          />
-        ) : (
-          <p className="profile-bio">{bio}</p>
-        )}
+        <p className="profile-bio">
+          {profile.desc}
+        </p>
 
-        <button
-          className="edit-profile-btn"
-          onClick={() => setIsEditing(true)}
-        >
-          Edit profile
-        </button>
+        {/* PROFILE SENDIRI = EDIT */}
+        {isOwnProfile ? (
+          <button
+            type="button"
+            className="edit-profile-btn"
+            onClick={handleEdit}
+          >
+            Edit profile
+          </button>
+        ) : (
+
+          /* PROFILE ORANG LAIN = FOLLOW */
+          <button
+            type="button"
+            className={`follow-profile-btn ${
+              isFollowing ? "following" : ""
+            }`}
+            onClick={() =>
+              setIsFollowing(!isFollowing)
+            }
+          >
+            {isFollowing ? "Followed" : "Follow"}
+          </button>
+        )}
       </section>
 
-      {isEditing && (
-        <div className="edit-profile-overlay">
-          <div className="edit-profile-card">
+      {/* ================= EDIT PROFILE ================= */}
+      {isEditing && isOwnProfile && (
+        <div
+          className="edit-profile-overlay"
+          onClick={handleCancel}
+        >
+          <div
+            className="edit-profile-card"
+            onClick={(e) => e.stopPropagation()}
+          >
+
+            {/* EDIT HEADER */}
             <div className="edit-profile-header">
               <h2>Edit profile</h2>
 
               <button
+                type="button"
                 className="done-btn"
-                onClick={handleSave}>
+                onClick={handleSave}
+              >
                 Done
               </button>
             </div>
 
+            {/* EDIT BODY */}
             <div className="edit-profile-body">
+
+              {/* NAME */}
               <div className="edit-field">
                 <label>Name</label>
+
                 <input
                   type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={editName}
+                  onChange={(e) =>
+                    setEditName(e.target.value)
+                  }
                   placeholder="Name"
                 />
               </div>
 
+              {/* USERNAME */}
               <div className="edit-field">
                 <label>Username</label>
+
                 <input
                   type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={editUsername}
+                  onChange={(e) =>
+                    setEditUsername(e.target.value)
+                  }
                   placeholder="Username"
                 />
               </div>
 
+              {/* BIO */}
               <div className="edit-field">
                 <label>Bio</label>
+
                 <textarea
-                  value={bio}
-                  onChange={(e) => setBio(e.target.value)}
+                  value={editBio}
+                  onChange={(e) =>
+                    setEditBio(e.target.value)
+                  }
                   placeholder="Bio"
                   rows={2}
                 />
               </div>
 
+              {/* INTERESTS */}
               <div className="edit-field">
                 <label>Interests</label>
+
                 <input
                   type="text"
                   value={interests}
-                  onChange={(e) => setInterests(e.target.value)}
+                  onChange={(e) =>
+                    setInterests(e.target.value)
+                  }
                   placeholder="Add interests"
                 />
               </div>
 
+              {/* LINKS */}
               <div className="edit-field">
                 <label>Links</label>
+
                 <input
                   type="text"
                   value={links}
-                  onChange={(e) => setLinks(e.target.value)}
+                  onChange={(e) =>
+                    setLinks(e.target.value)
+                  }
                   placeholder="Add links"
                 />
               </div>
 
+              {/* PODCAST */}
               <div className="edit-field">
                 <label>Podcast</label>
+
                 <input
                   type="text"
                   value={podcast}
-                  onChange={(e) => setPodcast(e.target.value)}
+                  onChange={(e) =>
+                    setPodcast(e.target.value)
+                  }
                   placeholder="+ Link to your podcast"
                 />
               </div>
 
+              {/* INSTAGRAM */}
               <div className="edit-field toggle-field">
-                <label>Show Instagram badge</label>
+                <label>
+                  Show Instagram badge
+                </label>
 
                 <button
+                  type="button"
                   className={`toggle-btn ${
                     showInstagram ? "active" : ""
                   }`}
@@ -276,10 +396,14 @@ function Profile() {
                 </button>
               </div>
 
+              {/* RECENT VIEWS */}
               <div className="edit-field toggle-field">
-                <label>Show recent views</label>
+                <label>
+                  Show recent views
+                </label>
 
                 <button
+                  type="button"
                   className={`toggle-btn ${
                     showRecentViews ? "active" : ""
                   }`}
@@ -291,13 +415,16 @@ function Profile() {
                 </button>
 
                 <p className="field-note">
-                  This will be public on your profile when you get
-                  10K+ recent views.
+                  This will be public on your profile when
+                  you get 10K+ recent views.
                 </p>
               </div>
 
+              {/* PROFILE PRIVACY */}
               <div className="edit-field">
-                <label>Profile privacy</label>
+                <label>
+                  Profile privacy
+                </label>
 
                 <select
                   value={profilePrivacy}
@@ -305,19 +432,27 @@ function Profile() {
                     setProfilePrivacy(e.target.value)
                   }
                 >
-                  <option value="Private">Private</option>
-                  <option value="Public">Public</option>
+                  <option value="Private">
+                    Private
+                  </option>
+
+                  <option value="Public">
+                    Public
+                  </option>
                 </select>
 
                 <p className="field-note">
-                  If you switch to public, anyone can see your
-                  threads and replies.
+                  If you switch to public, anyone can see
+                  your threads and replies.
                 </p>
               </div>
             </div>
 
+            {/* EDIT FOOTER */}
             <div className="edit-profile-footer">
+
               <button
+                type="button"
                 className="cancel-edit-btn"
                 onClick={handleCancel}
               >
@@ -325,83 +460,161 @@ function Profile() {
               </button>
 
               <button
+                type="button"
                 className="save-edit-btn"
                 onClick={handleSave}
               >
                 Save
               </button>
+
             </div>
           </div>
         </div>
       )}
 
+      {/* ================= TABS ================= */}
       <div className="profile-tabs">
+
         <button
+          type="button"
           className={`profile-tab ${
-            activeTab === "Threads" ? "active" : ""
+            activeTab === "Threads"
+              ? "active"
+              : ""
           }`}
-          onClick={() => setActiveTab("Threads")}
+          onClick={() =>
+            setActiveTab("Threads")
+          }
         >
           Threads
         </button>
 
         <button
+          type="button"
           className={`profile-tab ${
-            activeTab === "Replies" ? "active" : ""
+            activeTab === "Replies"
+              ? "active"
+              : ""
           }`}
-          onClick={() => setActiveTab("Replies")}
+          onClick={() =>
+            setActiveTab("Replies")
+          }
         >
           Replies
         </button>
 
         <button
+          type="button"
           className={`profile-tab ${
-            activeTab === "Media" ? "active" : ""
+            activeTab === "Media"
+              ? "active"
+              : ""
           }`}
-          onClick={() => setActiveTab("Media")}
+          onClick={() =>
+            setActiveTab("Media")
+          }
         >
           Media
         </button>
 
         <button
+          type="button"
           className={`profile-tab ${
-            activeTab === "Reposts" ? "active" : ""
+            activeTab === "Reposts"
+              ? "active"
+              : ""
           }`}
-          onClick={() => setActiveTab("Reposts")}
+          onClick={() =>
+            setActiveTab("Reposts")
+          }
         >
           Reposts
         </button>
+
       </div>
 
-      {activeTab === "Media" || activeTab === "Reposts" ? (
-        <div className="profile-empty">
-          <h3>No {activeTab.toLowerCase()} yet</h3>
-          <p>Your {activeTab.toLowerCase()} will appear here.</p>
-        </div>
-      ) : displayedPosts.length > 0 ? (
-        <section className="posts profile-posts">
-          {displayedPosts.map((post) => (
-            <PostCard
-              key={post.postId}
-              username={profile.profileName}
-              time={formatTime(post.timestamp)}
-              content={post.desc}
-              avatar={profile.imageUrl}
-              likes={getActionCount(post.postId, "Like")}
-              replies={getReplyCount(post.postId)}
-              reposts={getActionCount(post.postId, "Repost")}
-              shares={getActionCount(post.postId, "Share")}
-            />
-          ))}
-        </section>
-      ) : (
+      {/* ================= MEDIA / REPOSTS ================= */}
+      {activeTab === "Media" ||
+      activeTab === "Reposts" ? (
+
         <div className="profile-empty">
           <h3>
             No {activeTab.toLowerCase()} yet
           </h3>
+
           <p>
-            Your {activeTab.toLowerCase()} will appear here.
+            Your {activeTab.toLowerCase()} will appear
+            here.
           </p>
+        </div>
+
+      ) : displayedPosts.length > 0 ? (
+
+        /* ================= POSTS ================= */
+        <section className="posts profile-posts">
+
+          {displayedPosts.map((post) => {
+
+            const postProfile =
+              getProfileById(post.profileId);
+
+            return (
+              <PostCard
+                key={post.postId}
+
+                username={
+                  postProfile?.profileName ||
+                  "Unknown"
+                }
+
+                time={formatTime(
+                  post.timestamp
+                )}
+
+                content={post.desc}
+
+                avatar={
+                  postProfile?.imageUrl
+                }
+
+                likes={getActionCount(
+                  post.postId,
+                  "Like"
+                )}
+
+                replies={getReplyCount(
+                  post.postId
+                )}
+
+                reposts={getActionCount(
+                  post.postId,
+                  "Repost"
+                )}
+
+                shares={getActionCount(
+                  post.postId,
+                  "Share"
+                )}
+              />
+            );
+          })}
+
+        </section>
+
+      ) : (
+
+        /* ================= EMPTY ================= */
+        <div className="profile-empty">
+
+          <h3>
+            No {activeTab.toLowerCase()} yet
+          </h3>
+
+          <p>
+            Your {activeTab.toLowerCase()} will appear
+            here.
+          </p>
+
         </div>
       )}
     </div>

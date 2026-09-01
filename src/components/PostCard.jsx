@@ -25,7 +25,7 @@ function PostCard({
 
         <div className="thread-line"></div>
       </div>
-
+   
       <div className="post-body">
         <div className="post-header">
           <div className="username-row">
@@ -78,4 +78,4 @@ function PostCard({
   );
 }
 
-export default PostCard;
+export default PostCard;      

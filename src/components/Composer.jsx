@@ -13,8 +13,7 @@ function Composer({ onPost }) {
   }
 
   const handlePost = () => {
-    const text = content.trim();
-
+    const text = content.trim();  
     if (!text) return;
 
     const newPost = {

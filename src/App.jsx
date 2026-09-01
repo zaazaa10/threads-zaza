@@ -1,17 +1,15 @@
 import { useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-
 import Sidebar from "./components/Sidebar";
 import Composer from "./components/Composer";
 import ForYou from "./pages/ForYou";
 import Profile from "./pages/Profile";
-
 import postData from "./data/post.json";
+import Search from "./pages/Search";
 
 function App() {
   const [posts, setPosts] = useState(postData.post);
   const [showNewThread, setShowNewThread] = useState(false);
-
   const handleNewPost = (newPost) => {
     setPosts((prevPosts) => [newPost, ...prevPosts]);
     setShowNewThread(false);
@@ -36,8 +34,9 @@ function App() {
               }
             />
 
+            <Route path="/profile/:profileId" element={<Profile />} />
+            <Route path="/search" element={<Search />} />
             <Route path="/profile" element={<Profile />} />
-
             <Route
               path="*"
               element={<Navigate to="/" replace />}
@@ -49,7 +48,6 @@ function App() {
           <button className="floating-button">+</button>
         </div>
 
-        {/* NEW THREAD MODAL */}
         {showNewThread && (
           <div
             className="new-thread-overlay"
@@ -68,7 +66,6 @@ function App() {
                 </button>
 
                 <strong>New thread</strong>
-
                 <div className="new-thread-header-icons">
                   <span>▧</span>
                   <span>•••</span>
@@ -78,7 +75,7 @@ function App() {
               <Composer onPost={handleNewPost} />
             </div>
           </div>
-        )}
+          )}
       </div>
     </BrowserRouter>
   );

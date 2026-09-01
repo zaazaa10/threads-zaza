@@ -9,19 +9,19 @@
     {
       "postId": 2,
       "profileId": 2,
-      "desc": "Hari ini jalan-jalan keliling kota, cuacanya enak banget!",
+      "desc": "hari ini jalan-jalan keliling kota, cuacanya enak banget!",
       "timestamp": "2026-08-17T10:15:00Z"
     },
     {
       "postId": 3,
       "profileId": 3,
-      "desc": "Ngopi dulu sebelum mulai kerja ☕",
+      "desc": "nasehatin temen yang crush-nya udah ngepost story 2 cheesecake dan 2 kopi. responnya malah: lahap yaa makannya, sampe pesen 2. stresssss",
       "timestamp": "2026-08-20T12:45:00Z"
     },
     {
       "postId": 4,
       "profileId": 1,
-      "desc": "finally sampai Bali! Pantainya bagus banget 🌴",
+      "desc": "finally sampai bali! pantainya bagus banget 🌴",
       "timestamp": "2026-08-21T07:20:00Z"
     },
     {
@@ -69,42 +69,42 @@
     {
       "postId": 12,
       "profileId": 2,
-      "desc": "Wah bagus banget tempatnya!",
+      "desc": "wah bagus banget tempatnya!",
       "parentPostId": 9,
       "timestamp": "2026-08-23T11:12:00Z"
     },
     {
       "postId": 13,
       "profileId": 2,
-      "desc": "Ini di Bali daerah mana?",
+      "desc": "ini di Bali daerah mana?",
       "parentPostId": 9,
       "timestamp": "2026-08-23T11:18:00Z"
     },
     {
       "postId": 14,
       "profileId": 2,
-      "desc": "Kapan kesini lagi?",
+      "desc": "kapan kesini lagi?",
       "parentPostId": 10,
       "timestamp": "2026-08-19T14:10:00Z"
     },
     {
       "postId": 15,
       "profileId": 2,
-      "desc": "Ikut dong kalau pergi lagi 😂",
+      "desc": "ikut dong kalau pergi lagi 😂",
       "parentPostId": 10,
       "timestamp": "2026-08-23T14:15:00Z"
     },
     {
       "postId": 16,
       "profileId": 1,
-      "desc": "Boleh, nanti kabarin aja!",
+      "desc": "boleh, nanti kabarin aja!",
       "parentPostId": 15,
       "timestamp": "2026-08-23T14:20:00Z"
     },
     {
       "postId": 17,
       "profileId": 2,
-      "desc": "Wkwkwk relate banget",
+      "desc": "wkwkwk relate banget",
       "parentPostId": 8,
       "timestamp": "2026-08-22T11:40:00Z"
     },
