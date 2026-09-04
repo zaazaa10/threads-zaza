@@ -6,6 +6,7 @@ import ForYou from "./pages/ForYou";
 import Profile from "./pages/Profile";
 import postData from "./data/post.json";
 import Search from "./pages/Search";
+import Activity from "./pages/Activity";
 
 function App() {
   const [posts, setPosts] = useState(postData.post);
@@ -36,6 +37,7 @@ function App() {
 
             <Route path="/profile/:profileId" element={<Profile />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/activity" element={<Activity />} />
             <Route path="/profile" element={<Profile />} />
             <Route
               path="*"

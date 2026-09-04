@@ -15,7 +15,6 @@ function Search() {
   return (
     <div className="search-page">
       <div className="search-container">
-
         <div className="search-header">
           <div className="search-input-wrapper">
             <SearchIcon size={18} className="search-icon" />

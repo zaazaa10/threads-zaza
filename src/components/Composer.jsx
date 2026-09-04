@@ -3,11 +3,9 @@ import profileData from "../data/profile.json";
 
 function Composer({ onPost }) {
   const [content, setContent] = useState("");
-
   const currentUser = profileData.profile.find(
     (profile) => Number(profile.profileId) === 2
   );
-
   if (!currentUser) {
     return null;
   }
@@ -15,15 +13,13 @@ function Composer({ onPost }) {
   const handlePost = () => {
     const text = content.trim();  
     if (!text) return;
-
     const newPost = {
-      postId: Date.now(),
+      postId: Date.now(), 
       profileId: Number(currentUser.profileId),
       parentPostId: undefined,
       desc: text,
       timestamp: new Date().toISOString(),
     };
-
     onPost(newPost);
     setContent("");
   };

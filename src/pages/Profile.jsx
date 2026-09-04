@@ -11,28 +11,19 @@ import actionTypeData from "../data/actionType.json";
 function Profile() {
   const { profileId } = useParams();
   const navigate = useNavigate();
-
   const LOGGED_IN_PROFILE_ID = 2;
-
   const profiles = profileData.profile || [];
   const posts = postData.post || [];
   const actions = actionData.action || [];
   const actionTypes = actionTypeData.actionType || [];
-
-  // Kalau ada profileId di URL,
-  // berarti sedang melihat profile orang lain.
-  // Kalau tidak ada, berarti profile sendiri.
   const selectedProfileId = profileId
     ? Number(profileId)
     : LOGGED_IN_PROFILE_ID;
-
   const profile = profiles.find(
     (item) => Number(item.profileId) === selectedProfileId
   );
-
   const isOwnProfile =
     selectedProfileId === LOGGED_IN_PROFILE_ID;
-
   const [isEditing, setIsEditing] = useState(false);
   const [activeTab, setActiveTab] = useState("Threads");
   const [isFollowing, setIsFollowing] = useState(false);
@@ -66,7 +57,6 @@ function Profile() {
     setShowInstagram(false);
     setShowRecentViews(false);
     setProfilePrivacy("Private");
-
     setIsEditing(true);
   };
 
@@ -176,7 +166,6 @@ function Profile() {
       ? profileThreads
       : profileReplies;
 
-  // Kalau profile tidak ditemukan
   if (!profile) {
     return (
       <div className="page profile-page">
@@ -194,11 +183,8 @@ function Profile() {
   return (
     <div className="page profile-page">
 
-      {/* ================= HEADER ================= */}
       <header className="page-header">
         <div className="profile-header-left">
-
-          {/* Tombol back hanya muncul ketika melihat profile orang */}
           {!isOwnProfile && (
             <button
               type="button"
@@ -216,11 +202,8 @@ function Profile() {
         <MoreHorizontal size={22} />
       </header>
 
-      {/* ================= PROFILE CARD ================= */}
       <section className="profile-card">
-
         <div className="profile-top">
-
           <div className="profile-info">
             <h2>{profile.profileName}</h2>
 
@@ -240,7 +223,6 @@ function Profile() {
           {profile.desc}
         </p>
 
-        {/* PROFILE SENDIRI = EDIT */}
         {isOwnProfile ? (
           <button
             type="button"
@@ -251,7 +233,6 @@ function Profile() {
           </button>
         ) : (
 
-          /* PROFILE ORANG LAIN = FOLLOW */
           <button
             type="button"
             className={`follow-profile-btn ${
@@ -266,7 +247,6 @@ function Profile() {
         )}
       </section>
 
-      {/* ================= EDIT PROFILE ================= */}
       {isEditing && isOwnProfile && (
         <div
           className="edit-profile-overlay"
@@ -277,7 +257,6 @@ function Profile() {
             onClick={(e) => e.stopPropagation()}
           >
 
-            {/* EDIT HEADER */}
             <div className="edit-profile-header">
               <h2>Edit profile</h2>
 
@@ -290,10 +269,7 @@ function Profile() {
               </button>
             </div>
 
-            {/* EDIT BODY */}
             <div className="edit-profile-body">
-
-              {/* NAME */}
               <div className="edit-field">
                 <label>Name</label>
 
@@ -307,7 +283,6 @@ function Profile() {
                 />
               </div>
 
-              {/* USERNAME */}
               <div className="edit-field">
                 <label>Username</label>
 
@@ -321,7 +296,6 @@ function Profile() {
                 />
               </div>
 
-              {/* BIO */}
               <div className="edit-field">
                 <label>Bio</label>
 
@@ -335,7 +309,6 @@ function Profile() {
                 />
               </div>
 
-              {/* INTERESTS */}
               <div className="edit-field">
                 <label>Interests</label>
 
@@ -349,7 +322,6 @@ function Profile() {
                 />
               </div>
 
-              {/* LINKS */}
               <div className="edit-field">
                 <label>Links</label>
 
@@ -363,10 +335,8 @@ function Profile() {
                 />
               </div>
 
-              {/* PODCAST */}
               <div className="edit-field">
                 <label>Podcast</label>
-
                 <input
                   type="text"
                   value={podcast}
@@ -377,7 +347,6 @@ function Profile() {
                 />
               </div>
 
-              {/* INSTAGRAM */}
               <div className="edit-field toggle-field">
                 <label>
                   Show Instagram badge
@@ -396,7 +365,6 @@ function Profile() {
                 </button>
               </div>
 
-              {/* RECENT VIEWS */}
               <div className="edit-field toggle-field">
                 <label>
                   Show recent views
@@ -420,7 +388,6 @@ function Profile() {
                 </p>
               </div>
 
-              {/* PROFILE PRIVACY */}
               <div className="edit-field">
                 <label>
                   Profile privacy
@@ -448,9 +415,7 @@ function Profile() {
               </div>
             </div>
 
-            {/* EDIT FOOTER */}
             <div className="edit-profile-footer">
-
               <button
                 type="button"
                 className="cancel-edit-btn"
@@ -472,9 +437,7 @@ function Profile() {
         </div>
       )}
 
-      {/* ================= TABS ================= */}
       <div className="profile-tabs">
-
         <button
           type="button"
           className={`profile-tab ${
@@ -533,10 +496,8 @@ function Profile() {
 
       </div>
 
-      {/* ================= MEDIA / REPOSTS ================= */}
       {activeTab === "Media" ||
       activeTab === "Reposts" ? (
-
         <div className="profile-empty">
           <h3>
             No {activeTab.toLowerCase()} yet
@@ -550,14 +511,10 @@ function Profile() {
 
       ) : displayedPosts.length > 0 ? (
 
-        /* ================= POSTS ================= */
         <section className="posts profile-posts">
-
           {displayedPosts.map((post) => {
-
             const postProfile =
               getProfileById(post.profileId);
-
             return (
               <PostCard
                 key={post.postId}
@@ -600,10 +557,8 @@ function Profile() {
           })}
 
         </section>
-
       ) : (
 
-        /* ================= EMPTY ================= */
         <div className="profile-empty">
 
           <h3>
@@ -615,8 +570,7 @@ function Profile() {
             here.
           </p>
 
-        </div>
-      )}
+        </div> )}
     </div>
   );
 }

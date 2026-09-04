@@ -28,7 +28,6 @@ function Sidebar({ onNewThread }) {
           <span>For you</span>
         </NavLink>
 
-        {/* NEW THREAD */}
         <button
           type="button"
           className="menu-item new-thread-menu"
@@ -38,7 +37,6 @@ function Sidebar({ onNewThread }) {
           <span>New thread</span>
         </button>
 
-        {/* SEARCH */}
         <NavLink
           to="/search"
           className={({ isActive }) =>
@@ -48,18 +46,18 @@ function Sidebar({ onNewThread }) {
           <Search size={23} />
           <span>Search</span>
         </NavLink>
+      
+        <NavLink
+            to="/activity"
+            className={({ isActive }) =>
+           `menu-item ${isActive ? "active" : ""}`
+            }>
 
-        {/* ACTIVITY */}
-        <button
-          type="button"
-          className="menu-item disabled"
-        >
-          <Activity size={23} />
-          <span>Activity</span>
-          <span className="notification-dot"></span>
-        </button>
+        <Activity size={23} />
+        <span>Activity</span>
+        <span className="notification-dot"></span>
+        </NavLink>
 
-        {/* PROFILE */}
         <NavLink
           to="/profile"
           end
@@ -71,7 +69,6 @@ function Sidebar({ onNewThread }) {
           <span>Profile</span>
         </NavLink>
 
-        {/* SAVED */}
         <button
           type="button"
           className="menu-item disabled"
@@ -81,7 +78,6 @@ function Sidebar({ onNewThread }) {
         </button>
       </nav>
 
-      {/* FEEDS */}
       <div className="feeds">
         <div className="feeds-title">
           <span>Feeds</span>
@@ -98,7 +94,6 @@ function Sidebar({ onNewThread }) {
         </div>
       </div>
 
-      {/* MORE */}
       <button
         type="button"
         className="more-button"
