@@ -7,6 +7,7 @@ import Profile from "./pages/Profile";
 import postData from "./data/post.json";
 import Search from "./pages/Search";
 import Activity from "./pages/Activity";
+import ThreadDetail from "./pages/ThreadDetail";
 
 function App() {
   const [posts, setPosts] = useState(postData.post);
@@ -39,6 +40,9 @@ function App() {
             <Route path="/search" element={<Search />} />
             <Route path="/activity" element={<Activity />} />
             <Route path="/profile" element={<Profile />} />
+            <Route
+                path="/thread/:postId"
+                element={<ThreadDetail />} />
             <Route
               path="*"
               element={<Navigate to="/" replace />}

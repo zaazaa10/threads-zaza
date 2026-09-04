@@ -10,6 +10,7 @@ function PostCard({
   replies = 0,
   reposts = 0,
   shares = 0,
+  onReply,
 }) {
   const [liked, setLiked] = useState(false);
   const [reposted, setReposted] = useState(false);
@@ -54,9 +55,9 @@ function PostCard({
             </span>
           </button>
 
-          <button className="action-button">
-            <MessageCircle size={19} />
-            <span>{replies}</span>
+          <button className="action-btn" onClick={onReply}>
+          <MessageCircle size={18} />
+          <span>{replies}</span>
           </button>
 
           <button

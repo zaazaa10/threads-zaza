@@ -1,4 +1,5 @@
 import { MoreHorizontal } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import Composer from "../components/Composer";
 import PostCard from "../components/PostCard";
 import profileData from "../data/profile.json";
@@ -6,6 +7,7 @@ import actionData from "../data/action.json";
 import actionTypeData from "../data/actionType.json";
 
 function ForYou({ posts, onPost }) {
+  const navigate = useNavigate();
   const profiles = profileData.profile;
   const actions = actionData.action;
   const actionTypes = actionTypeData.actionType;
@@ -16,7 +18,9 @@ function ForYou({ posts, onPost }) {
         new Date(b.timestamp).getTime() -
         new Date(a.timestamp).getTime()
     );
-
+  const handleReplyClick = (postId) => {
+  navigate(`/thread/${postId}`);
+    };
   const getProfile = (profileId) => {
     return profiles.find(
       (profile) => Number(profile.profileId) === Number(profileId)
@@ -91,15 +95,17 @@ function ForYou({ posts, onPost }) {
           }
           return (
             <PostCard
-              key={post.postId}
-              username={profile.profileName}
-              time={formatTime(post.timestamp)}
-              content={post.desc}
-              avatar={profile.imageUrl}
-              likes={getActionCount(post.postId, "Like")}
-              replies={getReplyCount(post.postId)}
-              reposts={getActionCount(post.postId, "Repost")}
-              shares={getActionCount(post.postId, "Share")} />
+            key={post.postId}
+            username={profile.profileName}
+            time={formatTime(post.timestamp)}
+            content={post.desc}
+            avatar={profile.imageUrl}
+            likes={getActionCount(post.postId, "Like")}
+            replies={getReplyCount(post.postId)}
+            reposts={getActionCount(post.postId, "Repost")}
+            shares={getActionCount(post.postId, "Share")}
+            onReply={() => handleReplyClick(post.postId)}
+            />
           );
         })}
       </section>
